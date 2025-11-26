@@ -192,6 +192,13 @@ class DiscordCheatAnalyzer {
 
       // Evento de nuevos mensajes
       this.client.on('messageCreate', async (message) => {
+        // Responder a menciones del bot
+        if (message.mentions.has(this.client.user)) {
+          await this.handleBotMention(message);
+          return;
+        }
+        
+        // Análisis automático en canales de cheating
         if (this.isCheatingChannel(message.channelId) || this.isPrivateChannel(message.channelId)) {
           await this.analyzeMessage(message);
         }
@@ -428,6 +435,63 @@ class DiscordCheatAnalyzer {
     setInterval(() => {
       console.log(`🔍 Análisis activo - Servidores: ${this.client.guilds.cache.size}, Canales monitoreados: ${this.codeChannelIds.size}`);
     }, 30000);
+  }
+
+  /**
+   * Maneja las menciones al bot
+   */
+  private async handleBotMention(message: any): Promise<void> {
+    try {
+      // Remover la mención del contenido
+      const content = message.content.replace(/<@!?\d+>/g, '').trim().toLowerCase();
+      
+      if (content === 'mmg' || content === 'hola' || content === 'hello' || content === 'help' || content === 'ayuda') {
+        await message.reply('🤖 **Stealth-AntiCheatX Bot Online**\n' +
+          '✅ Monitoreando canales de cheating\n' +
+          '💬 Responde a menciones con: `ayuda`, `status`, `analizar [código]`\n' +
+          '⚡ Análisis automático activo\n' +
+          '🎯 **Comandos disponibles:**\n' +
+          '`@Stealth-AntiCheatX status` - Estado del bot\n' +
+          '`@Stealth-AntiCheatX analizar [código]` - Analizar código sospechoso');
+      } else if (content === 'status') {
+        const stats = this.getAnalyzerStats();
+        await message.reply(`📊 **Estado del Bot:**\n` +
+          `🤖 **Servidores:** ${stats.guilds}\n` +
+          `📺 **Canales monitoreados:** ${stats.channels.code + stats.channels.private}\n` +
+          `🔍 **Monitoreo:** ${stats.connected ? '🟢 Activo' : '🔴 Inactivo'}\n` +
+          `⚡ **Análisis automático:** ${this.codeChannelIds.size > 0 ? '🟢 Habilitado' : '⚠️ Configurar canales'}`);
+      } else if (content.startsWith('analizar ') || content.startsWith('analize ')) {
+        const codeToAnalyze = content.replace(/^(analizar|analize)\s+/, '');
+        if (codeToAnalyze.length > 10) {
+          const analysis = this.antiCheatAnalyzer.analyzeCode(codeToAnalyze);
+          let response = `🔍 **Análisis completado:**\n` +
+            `⚠️ **Nivel de riesgo:** ${analysis.riskLevel}\n` +
+            `🎯 **Métodos detectados:** ${analysis.detectedMethods.join(', ') || 'Ninguno'}\n` +
+            `📊 **Confianza:** ${Math.round(analysis.confidence * 100)}%\n` +
+            `💡 **Recomendaciones:** ${analysis.recommendations.join('; ') || 'Continuar monitoreo'}`;
+          
+          if (analysis.suspiciousPatterns.length > 0) {
+            response += `\n\n🔴 **Patrones sospechosos encontrados:** ${analysis.suspiciousPatterns.length}`;
+          }
+          
+          await message.reply(response);
+        } else {
+          await message.reply('🤖 Por favor proporciona más código para analizar (mínimo 10 caracteres). Ejemplo: `@Stealth-AntiCheatX analizar function(){hack()}`');
+        }
+      } else if (content === 'ping') {
+        await message.reply('🏓 Pong! Bot respondiendo correctamente.');
+      } else {
+        await message.reply('🤖 **Comandos disponibles:**\n' +
+          '`@Stealth-AntiCheatX ayuda` - Lista de comandos\n' +
+          '`@Stealth-AntiCheatX status` - Estado del bot\n' +
+          '`@Stealth-AntiCheatX ping` - Test de respuesta\n' +
+          '`@Stealth-AntiCheatX analizar [código]` - Analizar código\n' +
+          '`@Stealth-AntiCheatX mmg` - Saludo básico');
+      }
+    } catch (error) {
+      console.error('❌ Error manejando mención del bot:', error);
+      await message.reply('❌ Error procesando comando. El bot está funcionando pero hubo un problema. Intenta de nuevo.');
+    }
   }
 
   /**
