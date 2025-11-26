@@ -76,34 +76,40 @@ Stealth-AntiCheat/MCP es un sistema avanzado de análisis anti-cheat que utiliza
 └─────────────────────────────────────────────────────────────────────────────────┘
 ```
 
-## 🚀 **INSTALACIÓN Y CONFIGURACIÓN**
+## 🚀 **INSTALACIÓN RÁPIDA (IPHONE FRIENDLY)**
 
-### **Prerrequisitos**
-- Node.js 18.0.0+
-- npm o yarn
-- VPS/Cloud hosting (recomendado) o servidor local
-- Discord Bot Token con permisos necesarios
-- OpenAI API Key (opcional pero recomendado para GPT-4)
-
-### **1. Clonar el Repositorio**
+### **Opción 1: Instalación Automática (RECOMENDADA)**
 ```bash
 git clone https://github.com/xpe-hub/Stealth-AntiCheat-MCP.git
 cd Stealth-AntiCheat-MCP
+chmod +x install-complete.sh
+./install-complete.sh
 ```
 
-### **2. Instalar Dependencias**
+### **Opción 2: Para Computadora Local**
 ```bash
+git clone https://github.com/xpe-hub/Stealth-AntiCheat-MCP.git
+cd Stealth-AntiCheat-MCP
 npm install
+npm run build
+./validate-mcp.sh
+npm start
 ```
 
-### **3. Configurar Variables de Entorno**
-```bash
-# Copiar archivo de ejemplo
-cp .env.example .env
+### **🎯 Ya Tienes TODO Configurado**
+- ✅ **Discord Bot Token**: `1441878707250791722.GHFGuP.JZJGI3pJDm2iaN2CJHiRUKoyq_kqxIPoh6ADws`
+- ✅ **MiniMax AI**: JWT token completo configurado
+- ✅ **5 Canales Discord**: Todos los IDs configurados
+- ✅ **Webhooks**: Configurados para notificaciones
+- ✅ **GitHub Token**: Para análisis de repositorios
 
-# Editar configuración
-nano .env
-```
+### **📱 Control desde iPhone**
+Usa **Railway.app** para ejecutar 24/7 desde tu teléfono:
+
+1. Crear cuenta en Railway.app
+2. Conectar repositorio GitHub
+3. El servidor se ejecuta automáticamente
+4. Gestiona todo desde iPhone
 
 **Configuración mínima requerida:**
 ```bash
@@ -151,49 +157,79 @@ El bot necesita los siguientes permisos:
 3. Invitar bot a servidor con permisos necesarios
 4. Añadir IDs de canales específicos al monitoreo
 
-## 📋 **HERRAMIENTAS MCP DISPONIBLES**
+## 📋 **HERRAMIENTAS MCP DISPONIBLES (8 HERRAMIENTAS AVANZADAS)**
 
 ### **1. `analyze_code`**
 Analiza código en busca de patrones de cheating.
 ```json
 {
   "code": "GetWindowLongPtr(hwnd, GWL_WNDPROC)",
-  "context": "C++ code snippet from Discord"
+  "context": "ESP detection code"
 }
 ```
 
 ### **2. `start_cheating_monitoring`**
-Inicia monitoreo de canales específicos.
+Inicia monitoreo automático de canales Discord.
 ```json
 {
-  "channel_ids": ["123456789", "987654321"],
+  "channel_ids": ["1442266383265038386", "1441888236833210389"],
   "monitor_type": "code"
 }
 ```
 
-### **3. `generate_anticheat_code`**
+### **3. `ai_intelligent_analysis`** 🧠
+Análisis inteligente combinando MiniMax M2 + GPT-4.
+```json
+{
+  "code": "// Código sospechoso...",
+  "context": "Análisis avanzado de seguridad",
+  "use_minimax_m2": true
+}
+```
+
+### **4. `auto_detect_channels`** 🔍
+Detecta automáticamente canales de cheating.
+```json
+{
+  "server_id": "tu_servidor_id",
+  "min_confidence": 0.7
+}
+```
+
+### **5. `m2_anticheat_evolution`** 🧬
+Evoluciona anti-cheat usando IA avanzada.
+```json
+{
+  "current_threats": ["ESP", "Aimbot", "Memory Injection"],
+  "game_type": "First Person Shooter",
+  "evolution_level": "revolutionary"
+}
+```
+
+### **6. `generate_anticheat_code`**
 Genera código anti-cheat usando GPT-4.
 ```json
 {
-  "target_method": "ESP Overlay Detection",
-  "game_name": "Counter-Strike 2",
-  "sophistication": "advanced"
+  "target_method": "Memory Injection",
+  "game_name": "Valorant",
+  "sophistication": "military"
 }
 ```
 
-### **4. `scan_repository`**
-Escanea repositorios GitHub en busca de código de cheating.
+### **7. `scan_repository`**
+Escanea repositorios GitHub para código sospechoso.
 ```json
 {
-  "repo_url": "https://github.com/user/suspicious-repo"
+  "repo_url": "https://github.com/user/cheat-repo",
+  "include_readme": true
 }
 ```
 
-### **5. `get_analysis_stats`**
-Obtiene estadísticas del sistema de análisis.
+### **8. `get_analysis_stats`**
+Obtiene estadísticas completas del sistema.
 
-### **6. `update_anticheat_signatures`**
-Actualiza signatures del anti-cheat con nuevos métodos detectados.
+### **9. `update_anticheat_signatures`**
+Actualiza firmas con nuevos métodos detectados.
 
 ## 🎯 **USO PRÁCTICO**
 
