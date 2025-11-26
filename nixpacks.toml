@@ -1,5 +1,5 @@
-[providers]
-node = "20"
+[providers.node]
+version = "20"
 
 [phases.install]
 dependsOn = ["setup"]
