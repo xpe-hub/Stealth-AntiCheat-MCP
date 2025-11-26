@@ -9,6 +9,14 @@ import * as fs from 'fs-extra';
 import * as path from 'path';
 
 export class DiscordCheatClient {
+  // Properties
+  config: DiscordCheatConfig;
+  client: Client;
+  connected: boolean;
+  monitoredChannels: Set<string>;
+  messageQueue: any[];
+  analysisResults: any[];
+
   constructor(config: DiscordCheatConfig) {
     this.config = config;
     this.client = new Client({

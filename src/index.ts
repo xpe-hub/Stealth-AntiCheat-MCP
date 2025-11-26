@@ -16,7 +16,7 @@ import {
 } from '@modelcontextprotocol/sdk/types.js';
 import { Client, GatewayIntentBits, Collection } from 'discord.js';
 import OpenAI from 'openai';
-import { minimaxMCP } from 'minimax-mcp-js';
+// import { minimaxMCP } from 'minimax-mcp-js'; // Temporarily disabled
 import SQLite from 'sqlite3';
 import * as fs from 'fs-extra';
 import * as path from 'path';
@@ -28,6 +28,11 @@ import * as cheerio from 'cheerio';
 // ================================
 
 class AntiCheatAnalyzer {
+  // Properties
+  cheatingMethods: Map<string, any>;
+  patterns: Map<string, any>;
+  knownCheats: Set<string>;
+
   constructor() {
     this.cheatingMethods = new Map();
     this.patterns = new Map();
@@ -146,6 +151,14 @@ class AntiCheatAnalyzer {
 }
 
 class DiscordCheatAnalyzer {
+  // Properties
+  client: Client;
+  token: string;
+  antiCheatAnalyzer: AntiCheatAnalyzer;
+  messageCache: Collection;
+  codeChannelIds: Set<string>;
+  privateChannelIds: Set<string>;
+
   constructor(token: string) {
     this.client = new Client({
       intents: [
@@ -493,11 +506,11 @@ class StealthAntiCheatMCPServer {
     if (!this.minimaxApiKey) {
       console.log('⚠️ MINIMAX_API_KEY no configurado - M2 deshabilitado');
     } else {
-      this.minimaxClient = new minimaxMCP({
-        apiKey: this.minimaxApiKey,
-        baseURL: process.env.MINIMAX_API_HOST || 'https://api.minimax.chat'
-      });
-      console.log('🚀 MiniMax M2 habilitado para análisis inteligente avanzado');
+      // this.minimaxClient = new minimaxMCP({
+      //   apiKey: this.minimaxApiKey,
+      //   baseURL: process.env.MINIMAX_API_HOST || 'https://api.minimax.chat'
+      // });
+      console.log('🚀 MiniMax M2 deshabilitado temporalmente');
     }
   }
 
@@ -871,7 +884,8 @@ class StealthAntiCheatMCPServer {
       const basicAnalysis = this.antiCheatAnalyzer.analyzeCode(code, context);
 
       // Análisis avanzado con M2 si está disponible
-      if (useMinimaxM2 && this.minimaxClient) {
+      // Análisis M2 deshabilitado temporalmente
+      if (false && this.minimaxClient) {
         const m2Prompt = `
           Analiza este código de forma inteligente para detectar cheating:
           
@@ -889,7 +903,7 @@ class StealthAntiCheatMCPServer {
           5. Posibles evasiones o variaciones
         `;
 
-        const m2Response = await this.minimaxClient.chat(m2Prompt);
+        // const m2Response = await this.minimaxClient.chat(m2Prompt);
         analysisText += `🤖 **ANÁLISIS M2 INTELIGENTE:**\n${m2Response.content}\n\n`;
       }
 
@@ -996,7 +1010,7 @@ ${detectedChannels.map(ch =>
    * Evolución del anti-cheat usando M2
    */
   private async m2AntiCheatEvolution(currentThreats: string[], gameType: string, evolutionLevel: string): Promise<any> {
-    if (!this.minimaxClient) {
+    if (false && !this.minimaxClient) {
       throw new Error('MiniMax M2 no disponible');
     }
 
@@ -1018,7 +1032,7 @@ ${detectedChannels.map(ch =>
         Sé específico y técnico. El objetivo es superar estas amenazas.
       `;
 
-      const evolutionResult = await this.minimaxClient.chat(evolutionPrompt);
+      // const evolutionResult = await this.minimaxClient.chat(evolutionPrompt);
 
       return {
         content: [
