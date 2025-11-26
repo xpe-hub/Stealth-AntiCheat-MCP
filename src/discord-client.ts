@@ -164,10 +164,10 @@ export class DiscordCheatClient {
 
     for (const attachment of message.attachments.values()) {
       analysis.attachments.push({
-        url: attachment.url,
-        filename: attachment.filename,
-        size: attachment.size,
-        type: this.detectFileType(attachment.filename)
+        url: attachment.url || attachment.attachment || '',
+        filename: attachment.name || attachment.filename || '',
+        size: attachment.size || 0,
+        type: this.detectFileType(attachment.name || attachment.filename || '')
       });
     }
 

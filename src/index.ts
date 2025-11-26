@@ -678,37 +678,37 @@ class StealthAntiCheatMCPServer {
     try {
       switch (name) {
         case 'analyze_code':
-          return await this.analyzeCode(args.code, args.context);
+          return await this.analyzeCode((args as any).code, (args as any).context);
         
         case 'start_cheating_monitoring':
-          return await this.startCheatingMonitoring(args.channel_ids, args.monitor_type);
+          return await this.startCheatingMonitoring((args as any).channel_ids, (args as any).monitor_type);
         
         case 'get_analysis_stats':
           return await this.getAnalysisStats();
         
         case 'update_anticheat_signatures':
-          return await this.updateAntiCheatSignatures(args.cheating_methods, args.patterns);
+          return await this.updateAntiCheatSignatures((args as any).cheating_methods, (args as any).patterns);
         
         case 'generate_anticheat_code':
-          return await this.generateAntiCheatCode(args.target_method, args.game_name, args.sophistication);
+          return await this.generateAntiCheatCode((args as any).target_method, (args as any).game_name, (args as any).sophistication);
         
         case 'scan_repository':
-          return await this.scanRepository(args.repo_url, args.include_readme);
+          return await this.scanRepository((args as any).repo_url, (args as any).include_readme);
         
         case 'ai_intelligent_analysis':
-          return await this.aiIntelligentAnalysis(args.code, args.context, args.use_minimax_m2);
+          return await this.aiIntelligentAnalysis((args as any).code, (args as any).context, (args as any).use_minimax_m2);
         
         case 'auto_detect_channels':
-          return await this.autoDetectChannels(args.server_id, args.min_confidence);
+          return await this.autoDetectChannels((args as any).server_id, (args as any).min_confidence);
         
         case 'm2_anticheat_evolution':
-          return await this.m2AntiCheatEvolution(args.current_threats, args.game_type, args.evolution_level);
+          return await this.m2AntiCheatEvolution((args as any).current_threats, (args as any).game_type, (args as any).evolution_level);
         
         default:
           throw new Error(`Herramienta desconocida: ${name}`);
       }
     } catch (error) {
-      console.error(`Error ejecutando herramienta ${name}:`, error);
+      console.error(`Error ejecutando herramienta ${name}:`, error as Error);
       return {
         content: [
           {
@@ -745,7 +745,7 @@ class StealthAntiCheatMCPServer {
     }
 
     for (const channelId of channelIds) {
-      this.discordAnalyzer.addChannelToMonitor(channelId, monitorType);
+      this.discordAnalyzer.addChannelToMonitor(channelId, monitorType as 'code' | 'private');
     }
 
     return {
@@ -904,7 +904,7 @@ class StealthAntiCheatMCPServer {
         `;
 
         // const m2Response = await this.minimaxClient.chat(m2Prompt);
-        analysisText += `🤖 **ANÁLISIS M2 INTELIGENTE:**\n${m2Response.content}\n\n`;
+        // analysisText += `🤖 **ANÁLISIS M2 INTELIGENTE:**\n${m2Response.content}\n\n`;
       }
 
       // Análisis complementario con GPT-4
@@ -945,7 +945,7 @@ class StealthAntiCheatMCPServer {
       };
 
     } catch (error) {
-      throw new Error(`Error en análisis inteligente: ${error.message}`);
+      throw new Error(`Error en análisis inteligente: ${(error as Error).message}`);
     }
   }
 
@@ -961,7 +961,7 @@ class StealthAntiCheatMCPServer {
       const guild = await this.discordAnalyzer.client.guilds.fetch(serverId);
       const channels = guild.channels.cache.filter(ch => ch.isTextBased());
 
-      const detectedChannels = [];
+      const detectedChannels: any[] = [];
       const suspiciousPatterns = [
         'cheat', 'hack', 'code', 'script', 'exploit', 'bot', 'automation',
         'macro', 'trigger', 'aim', 'esp', 'wallhack', 'speedhack'
@@ -1002,7 +1002,7 @@ ${detectedChannels.map(ch =>
       };
 
     } catch (error) {
-      throw new Error(`Error detectando canales: ${error.message}`);
+      throw new Error(`Error detectando canales: ${(error as Error).message}`);
     }
   }
 
@@ -1046,7 +1046,14 @@ Amenazas base: ${currentThreats.length}
 
 🚀 **RESULTADO DE LA EVOLUCIÓN:**
 
-${evolutionResult.content}
+💡 **Próximos pasos:**
+• Implementar nuevas signatures
+• Actualizar patrones de detección  
+• Probar en entorno controlado
+
+/* Deshabilitado temporalmente:
+${evolutionResult?.content || 'Análisis de evolución no disponible'}
+*/
 
 💡 **Próximos pasos:**
 • Implementar nuevas signatures
@@ -1058,7 +1065,7 @@ ${evolutionResult.content}
       };
 
     } catch (error) {
-      throw new Error(`Error en evolución anti-cheat: ${error.message}`);
+      throw new Error(`Error en evolución anti-cheat: ${(error as Error).message}`);
     }
   }
 
