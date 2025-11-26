@@ -482,7 +482,7 @@ class StealthAntiCheatMCPServer {
 
   constructor() {
     this.discordToken = process.env.DISCORD_BOT_TOKEN || '';
-    this.openaiApiKey = process.env.OPENAI_API_KEY || '';
+    this.openaiApiKey = process.env.OPENROUTER_API_KEY || '';
     this.minimaxApiKey = process.env.MINIMAX_API_KEY || '';
     this.webhookUrl = process.env.ANTICHEAT_WEBHOOK_URL || '';
     
@@ -495,12 +495,15 @@ class StealthAntiCheatMCPServer {
       }
     );
 
-    // Configurar OpenAI (GPT-4)
+    // Configurar OpenRouter con MiniMax-M2
     if (!this.openaiApiKey) {
-      console.log('⚠️ OPENAI_API_KEY no configurado - GPT-4 deshabilitado');
+      console.log('⚠️ OPENROUTER_API_KEY no configurado - AI deshabilitado');
     } else {
-      this.openai = new OpenAI({ apiKey: this.openaiApiKey });
-      console.log('🧠 GPT-4 habilitado para análisis avanzado');
+      this.openai = new OpenAI({ 
+        apiKey: this.openaiApiKey,
+        baseURL: 'https://openrouter.ai/api/v1'
+      });
+      console.log('🚀 MiniMax-M2 habilitado via OpenRouter para análisis avanzado');
     }
 
     // Configurar MiniMax M2
@@ -601,7 +604,7 @@ class StealthAntiCheatMCPServer {
         },
         {
           name: 'generate_anticheat_code',
-          description: 'Genera código anti-cheat usando GPT-4',
+          description: 'Genera código anti-cheat usando MiniMax-M2',
           inputSchema: {
             type: 'object',
             properties: {
@@ -630,7 +633,7 @@ class StealthAntiCheatMCPServer {
         },
         {
           name: 'ai_intelligent_analysis',
-          description: 'Análisis inteligente con M2 + GPT-4 de código sospechoso',
+          description: 'Análisis inteligente con M2 de código sospechoso',
           inputSchema: {
             type: 'object',
             properties: {
@@ -806,11 +809,11 @@ class StealthAntiCheatMCPServer {
   }
 
   /**
-   * Genera código anti-cheat usando GPT-4
+   * Genera código anti-cheat usando MiniMax-M2
    */
   private async generateAntiCheatCode(targetMethod: string, gameName: string, sophistication: string): Promise<any> {
     if (!this.openai) {
-      throw new Error('GPT-4 no disponible - OPENAI_API_KEY no configurado');
+      throw new Error('MiniMax-M2 no disponible - OPENROUTER_API_KEY no configurado');
     }
 
     const prompt = `
@@ -828,7 +831,7 @@ class StealthAntiCheatMCPServer {
     `;
 
     const response = await this.openai.chat.completions.create({
-      model: 'gpt-4',
+      model: 'minimax/minimax-m2',
       messages: [{ role: 'user', content: prompt }],
       max_tokens: 2000,
       temperature: 0.3
@@ -876,7 +879,7 @@ class StealthAntiCheatMCPServer {
   }
 
   /**
-   * Análisis inteligente con M2 + GPT-4
+   * Análisis inteligente con MiniMax-M2
    */
   private async aiIntelligentAnalysis(code: string, context: string = '', useMinimaxM2: boolean = true): Promise<any> {
     let analysisText = '';
@@ -909,7 +912,7 @@ class StealthAntiCheatMCPServer {
         // analysisText += `🤖 **ANÁLISIS M2 INTELIGENTE:**\n${m2Response.content}\n\n`;
       }
 
-      // Análisis complementario con GPT-4
+      // Análisis complementario con MiniMax-M2
       if (this.openai) {
         const gptPrompt = `
           Como experto en anti-cheating, analiza este código:
@@ -926,13 +929,13 @@ class StealthAntiCheatMCPServer {
         `;
 
         const gptResponse = await this.openai.chat.completions.create({
-          model: 'gpt-4',
+          model: 'minimax/minimax-m2',
           messages: [{ role: 'user', content: gptPrompt }],
           max_tokens: 1000,
           temperature: 0.2
         });
 
-        analysisText += `🧠 **ANÁLISIS GPT-4 EXPERTO:**\n${gptResponse.choices[0].message.content}\n\n`;
+        analysisText += `🧠 **ANÁLISIS MINIMAX-M2 EXPERTO:**\n${gptResponse.choices[0].message.content}\n\n`;
       }
 
       analysisText += `📊 **ANÁLISIS TÉCNICO BÁSICO:**\n${JSON.stringify(basicAnalysis, null, 2)}`;
@@ -1135,7 +1138,7 @@ async function main() {
   ║                                                                                      ║
   ║    👨‍💻 Copyright (c) 2025 xpe.nettt - Community Stealth                              ║
   ║    🛡️ Análisis automático de Discord servers de cheating                            ║
-  ║    🧠 Auto-actualización de anti-cheat con GPT-4                                    ║
+  ║    🧠 Auto-actualización de anti-cheat con MiniMax-M2                               ║
   ║    🔍 Detección en tiempo real de métodos de cheating                                ║
   ║    ⚡ MCP Protocol para escalabilidad                                                ║
   ║                                                                                      ║
