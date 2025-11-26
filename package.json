@@ -32,7 +32,6 @@
     "@modelcontextprotocol/sdk": "^0.6.0",
     "discord.js": "^14.15.3",
     "openai": "^4.67.3",
-    "minimax-mcp-js": "^1.0.0",
     "sqlite3": "^5.1.7",
     "axios": "^1.7.2",
     "typescript": "^5.6.2",
@@ -40,11 +39,7 @@
     "dotenv": "^16.4.5",
     "fs-extra": "^11.2.0",
     "cheerio": "^1.0.0-rc.12",
-    "code-analyzer": "^1.0.0",
-    "anti-cheat-detector": "^3.0.0",
-    "git-repo-manager": "^2.0.0",
-    "natural": "^6.10.4",
-    "ml5": "^0.12.2"
+    "natural": "^6.10.4"
   },
   "devDependencies": {
     "@types/node": "^22.5.4",
