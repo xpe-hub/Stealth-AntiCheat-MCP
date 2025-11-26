@@ -155,7 +155,7 @@ class DiscordCheatAnalyzer {
   client: Client;
   token: string;
   antiCheatAnalyzer: AntiCheatAnalyzer;
-  messageCache: Collection;
+  messageCache: Collection<string, any>;
   codeChannelIds: Set<string>;
   privateChannelIds: Set<string>;
 

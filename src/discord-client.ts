@@ -154,7 +154,7 @@ export class DiscordCheatClient {
   /**
    * Analiza adjuntos en el mensaje
    */
-  private async analyzeAttachments(message: any): Promise<void> {
+  private async analyzeAttachments(message: { channelId: string; attachments: any; }): Promise<void> {
     const analysis = {
       type: 'attachments',
       channelId: message.channelId,
@@ -180,7 +180,7 @@ export class DiscordCheatClient {
   private detectFileType(filename: string): string {
     const ext = path.extname(filename).toLowerCase();
     
-    const fileTypes = {
+    const fileTypes: Record<string, string> = {
       '.cpp': 'cpp',
       '.c': 'c',
       '.h': 'header',
