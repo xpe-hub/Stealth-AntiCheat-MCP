@@ -154,11 +154,11 @@ export class DiscordCheatClient {
   /**
    * Analiza adjuntos en el mensaje
    */
-  private async analyzeAttachments(message: { channelId: string; attachments: any; }): Promise<void> {
-    const analysis = {
+  private async analyzeAttachments(message: any): Promise<void> {
+    const analysis: any = {
       type: 'attachments',
       channelId: message.channelId,
-      attachments: [],
+      attachments: [] as any[],
       timestamp: new Date()
     };
 

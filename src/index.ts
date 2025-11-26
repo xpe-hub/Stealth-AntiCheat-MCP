@@ -488,11 +488,13 @@ class StealthAntiCheatMCPServer {
     
     this.discordAnalyzer = null;
     this.antiCheatAnalyzer = new AntiCheatAnalyzer();
-    this.server = new Server({
-      name: 'stealth-anticheatx-mcp-server',
-      version: '3.0.0',
-      description: 'MCP Server para análisis anti-cheat en tiempo real'
-    });
+    this.server = new Server(
+      'stealth-anticheatx-mcp-server',
+      {
+        version: '3.0.0',
+        description: 'MCP Server para análisis anti-cheat en tiempo real'
+      }
+    );
 
     // Configurar OpenAI (GPT-4)
     if (!this.openaiApiKey) {
@@ -708,12 +710,13 @@ class StealthAntiCheatMCPServer {
           throw new Error(`Herramienta desconocida: ${name}`);
       }
     } catch (error) {
-      console.error(`Error ejecutando herramienta ${name}:`, error as Error);
+      const err = error as Error;
+      console.error(`Error ejecutando herramienta ${name}:`, err);
       return {
         content: [
           {
             type: 'text',
-            text: `❌ Error: ${error.message}`
+            text: `❌ Error: ${err.message}`
           }
         ]
       };
@@ -1051,9 +1054,7 @@ Amenazas base: ${currentThreats.length}
 • Actualizar patrones de detección  
 • Probar en entorno controlado
 
-/* Deshabilitado temporalmente:
-${evolutionResult?.content || 'Análisis de evolución no disponible'}
-*/
+/* Deshabilitado temporalmente */
 
 💡 **Próximos pasos:**
 • Implementar nuevas signatures
