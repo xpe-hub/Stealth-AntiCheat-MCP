@@ -3,6 +3,34 @@
 > **Copyright (c) 2025 xpe-hub - Community Stealth**  
 > Análisis automático de servidores Discord de cheating con IA avanzada
 
+## 🚀 **INSTALACIÓN SÚPER RÁPIDA**
+
+### **Opción 1: Instalación Automática (Recomendada)**
+```bash
+git clone https://github.com/xpe-hub/Stealth-AntiCheat-MCP.git
+cd Stealth-AntiCheat-MCP
+bash install-complete.sh
+```
+
+### **Opción 2: Instalación Manual**
+```bash
+git clone https://github.com/xpe-hub/Stealth-AntiCheat-MCP.git
+cd Stealth-AntiCheat-MCP
+npm install --legacy-peer-deps
+npm run build
+bash validate-mcp.sh
+npm start
+```
+
+### **Opción 3: Para iPhone (Railway.app)**
+1. Ir a [Railway.app](https://railway.app) y crear cuenta
+2. Conectar tu repositorio de GitHub
+3. Railway desplegará automáticamente 24/7
+4. Controlar desde iPhone usando la interfaz web de Railway
+
+---
+## 📋 **DESCRIPCIÓN**
+
 ## 📋 **DESCRIPCIÓN**
 
 Stealth-AntiCheat/MCP es un sistema avanzado de análisis anti-cheat que utiliza el protocolo MCP (Model Context Protocol) para:

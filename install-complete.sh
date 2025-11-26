@@ -53,7 +53,8 @@ fi
 
 # Instalar dependencias
 echo "📦 Instalando dependencias..."
-npm install
+echo "🔄 Resolviendo conflictos de dependencias..."
+npm install --legacy-peer-deps --no-fund --no-audit
 
 if [ $? -eq 0 ]; then
     echo "✅ Dependencias instaladas correctamente"
