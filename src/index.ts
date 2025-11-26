@@ -489,10 +489,9 @@ class StealthAntiCheatMCPServer {
     this.discordAnalyzer = null;
     this.antiCheatAnalyzer = new AntiCheatAnalyzer();
     this.server = new Server(
-      'stealth-anticheatx-mcp-server',
       {
-        version: '3.0.0',
-        description: 'MCP Server para análisis anti-cheat en tiempo real'
+        name: 'stealth-anticheatx-mcp-server',
+        version: '3.0.0'
       }
     );
 
